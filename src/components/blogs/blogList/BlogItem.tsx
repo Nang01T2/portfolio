@@ -34,7 +34,7 @@ export const BlogItem: FunctionComponent<Props> = ({ blog }) => {
             {shortify(blog.title)}
           </h3>
           <p className="mt-1 text-sm text-gray-500">
-            {shortify(blog.description)}
+            {shortify(blog.description || blog.content)}
           </p>
         </div>
       </div>

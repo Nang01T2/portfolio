@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next/types";
-import { getBlogBySlugWithMarkdown, getBlogsSlugs } from "@/libs/blogs";
+import { getBlogBySlugsWithMarkdown, getBlogsSlugs } from "@/libs/blogs";
 import { Blog } from "@/interfaces/Blog";
 import { ParsedUrlQuery } from "querystring";
 import { BlogPage } from "@/components/blogs";
@@ -19,8 +19,8 @@ interface Params extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps<Props, Params> = async (
   context
 ) => {
-  const { slug } = context.params!;
-  const blog = await getBlogBySlugWithMarkdown(slug);
+  const { slugs } = context.params!;
+  const blog = await getBlogBySlugsWithMarkdown(slugs as string[]);
 
   return {
     props: { blog },
@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
 
 export const getStaticPaths: GetStaticPaths = () => {
   const slugs = getBlogsSlugs();
-  const paths = slugs.map((slug) => ({ params: { slug } }));
+  const paths = slugs.map((slug) => ({ params: { slugs: slug.split("/") } }));
 
   return {
     paths,

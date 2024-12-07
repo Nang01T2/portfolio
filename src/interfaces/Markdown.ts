@@ -7,6 +7,7 @@ export interface MarkdownItem {
   content: string;
   slug: string;
   date: string;
+  draft?: boolean;
 }
 
 export interface MarkdownContent {

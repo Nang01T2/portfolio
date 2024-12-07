@@ -9,7 +9,6 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { navigation } from "./navigation";
 import { ContentSearch } from "@/components/search";
-import DarkModeButton from "../darkModeButton";
 
 const Navbar = () => {
   return (

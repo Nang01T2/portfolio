@@ -5,6 +5,8 @@ const getLocalSearchIndex = () => {
 };
 
 const shortify = (text: string, maxLength = 70) => {
+  if (!text) return null;
+  
   if (text.length <= maxLength) {
     return text;
   }

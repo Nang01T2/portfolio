@@ -11,16 +11,23 @@ import { remark } from "remark";
 import html from "remark-html";
 import remarkGfm from "remark-gfm";
 
-const getDir = (path: string) => join(process.cwd(), path);
+const ROOT_DIR = process.cwd();
+
+const getDir = (path: string) => join(ROOT_DIR, path);
 
 const getFileNames = (dir: string): string[] => {
-  return fs.readdirSync(dir);
+  // the result will filter out hidden files and directories
+  return fs.readdirSync(dir).filter((file) => !/^\./.test(file));
 };
 
 const getItemInPath = (filePath: string): MarkdownItem => {
   const fileContent = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContent);
-  return { ...data, content } as MarkdownItem;
+  return {
+    ...data,
+    content,
+    date: data.date instanceof Date ? data.date.toISOString() : data.date,
+  } as MarkdownItem;
 };
 
 const getAllItems = (
@@ -28,7 +35,8 @@ const getAllItems = (
   get: (name: string) => MarkdownItem
 ) => {
   const items = fileNames
-    .map((name) => get(name))
+    .map(get)
+    .filter(({ draft }) => draft === undefined || !draft)
     .sort((item1, item2) => (item1.date > item2.date ? -1 : 1));
   return items;
 };

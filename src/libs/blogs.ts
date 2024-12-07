@@ -1,17 +1,25 @@
 import { join } from "path";
-import {
-  getDir,
-  getFileNames,
-  getItemInPath,
-  getAllItems,
-  markdownToHtml,
-} from "./md";
+import { getDir, getItemInPath, getAllItems, markdownToHtml } from "./md";
 import { Blog } from "@/interfaces/Blog";
+import getAllFilesRecursively from "./utils/file";
 
 const BLOG_DIR = getDir("/content/blogs");
 
 const getBlogFileNames = () => {
-  return getFileNames(BLOG_DIR);
+  const allFilesInBlogDir = getAllFilesRecursively(BLOG_DIR);
+
+  // Only want to return blog/path and ignore root
+  const allFiles = allFilesInBlogDir.map((file) =>
+    file.slice(BLOG_DIR.length + 1).replace(/\\/g, "/")
+  );
+
+  // Regular expression to match filenames ending with .md or .mdx
+  const regex = /\.(md|mdx)$/;
+
+  // Filter the array using the regex
+  const filteredData = allFiles.filter((filename) => regex.test(filename));
+
+  return filteredData;
 };
 
 const getBlogsSlugs = () => {
@@ -30,7 +38,11 @@ const getBlogBySlug = (slug: string) => {
 };
 
 const getBlogBySlugWithMarkdown = async (slug: string): Promise<Blog> => {
-  const blog = getBlogBySlug(slug);
+  return getBlogBySlugsWithMarkdown([slug]);
+};
+
+const getBlogBySlugsWithMarkdown = async (slugs: string[]): Promise<Blog> => {
+  const blog = getBlogBySlug(slugs.join("/"));
   blog.content = await markdownToHtml(blog.content);
   return blog;
 };
@@ -47,4 +59,5 @@ export {
   getBlogsSlugs,
   getBlogBySlug,
   getBlogBySlugWithMarkdown,
+  getBlogBySlugsWithMarkdown,
 };
