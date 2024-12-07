@@ -28,9 +28,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
-  const slugs = getBlogsSlugs();
-  const paths = slugs.map((slug) => ({ params: { slugs: slug.split("/") } }));
+  const slugs = getBlogsSlugs()
+    ?.map((x) => x.split("/"))
+    ?.filter((x) => x.length > 1);
 
+  const paths = slugs.map((slugs) => ({ params: { slugs } }));
   return {
     paths,
     fallback: false,
