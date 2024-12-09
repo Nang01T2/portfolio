@@ -1,13 +1,13 @@
 [
   {
-    "slug": "clean-architecture",
-    "title": "Clean Architecture",
+    "slug": "javascript/npm-yarn-pnpm",
+    "title": "PNPM, NPM, or Yarn: Which JavaScript Package Manager is Right for You?",
     "category": "blogs"
   },
   {
-    "slug": "misc/markdown-full-example",
-    "title": "Markdown Extensive Example",
-    "description": "Learn how to write markdown",
+    "slug": "software-design/clean-architecture",
+    "title": "Clean Architecture",
+    "description": "Clean Architecture Used in Software Development",
     "category": "blogs"
   }
 ]

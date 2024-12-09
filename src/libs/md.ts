@@ -26,7 +26,8 @@ const getItemInPath = (filePath: string): MarkdownItem => {
   return {
     ...data,
     content,
-    date: data.date instanceof Date ? data.date.toISOString() : data.date,
+    date:
+      data.date instanceof Date ? data.date.toLocaleDateString() : data.date,
   } as MarkdownItem;
 };
 
