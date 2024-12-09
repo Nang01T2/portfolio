@@ -1,11 +1,19 @@
-import { Navbar, Header, Footer } from "@/components/common";
+import { Navbar, Header, Footer, PageTransition } from "@/components/common";
 import Head from "next/head";
 import Image from "next/image";
 import { FunctionComponent, PropsWithChildren } from "react";
+import Container from "../container";
 
 const BaseLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
   return (
     <>
+      <Container className="flex flex-col justify-between">
+        <PageTransition>
+          <div className="relative z-10 bg-white pb-8 sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32">
+            <Header />
+          </div>
+        </PageTransition>
+      </Container>
       <div className="mx-auto max-w-7xl px-4 space-y-8 sm:px-6 lg:px-8">
         <Head>
           <title>Portfolio</title>
